@@ -8,7 +8,9 @@ import android.content.OperationApplicationException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.RemoteException;
+import android.text.Html;
 import android.text.format.Time;
 import android.util.Log;
 
@@ -66,7 +68,12 @@ public class UpdaterService extends IntentService {
                 values.put(ItemsContract.Items.SERVER_ID, object.getString("id" ));
                 values.put(ItemsContract.Items.AUTHOR, object.getString("author" ));
                 values.put(ItemsContract.Items.TITLE, object.getString("title" ));
-                values.put(ItemsContract.Items.BODY, object.getString("body" ));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    values.put(ItemsContract.Items.BODY, Html.fromHtml(object.getString("body" ), 1).toString());
+                }
+                else {
+                    values.put(ItemsContract.Items.BODY, Html.fromHtml(object.getString("body" )).toString());
+                }
                 values.put(ItemsContract.Items.THUMB_URL, object.getString("thumb" ));
                 values.put(ItemsContract.Items.PHOTO_URL, object.getString("photo" ));
                 values.put(ItemsContract.Items.ASPECT_RATIO, object.getString("aspect_ratio" ));
