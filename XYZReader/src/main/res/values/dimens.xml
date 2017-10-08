@@ -16,5 +16,6 @@
     <dimen name="image_view_height">120dp</dimen>
     <dimen name="text_view_padding_16">16dp</dimen>
     <dimen name="text_view_padding_4">4dp</dimen>
+    <dimen name="detail_card_padding">15dp</dimen>
 
 </resources>
