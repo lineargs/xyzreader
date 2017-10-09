@@ -67,7 +67,7 @@
                 style="@style/TextAppearance.AppCompat.Headline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:layout_marginTop="@dimen/detail_linear_margin"
                 android:textColor="@color/primary_text"
                 android:textStyle="bold" />
