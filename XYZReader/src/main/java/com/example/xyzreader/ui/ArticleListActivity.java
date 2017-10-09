@@ -159,11 +159,10 @@ public class ArticleListActivity extends AppCompatActivity implements
                     + "\n" + "by "
                     + mCursor.getString(ArticleLoader.Query.AUTHOR));
 
-            Picasso.with(getApplicationContext())
-                    .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
-                    .centerCrop()
-                    .fit()
-                    .into(holder.thumbnailView);
+            holder.thumbnailView.setImageUrl(
+                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
+                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
+            holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
         }
 
         @Override
@@ -173,13 +172,13 @@ public class ArticleListActivity extends AppCompatActivity implements
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView thumbnailView;
+        DynamicHeightNetworkImageView thumbnailView;
         TextView titleView;
         TextView subtitleView;
 
         ViewHolder(View view) {
             super(view);
-            thumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
+            thumbnailView = (DynamicHeightNetworkImageView) view.findViewById(R.id.thumbnail);
             titleView = (TextView) view.findViewById(R.id.article_title);
             subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
         }

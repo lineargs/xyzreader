@@ -22,6 +22,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -56,7 +57,7 @@ public class ArticleDetailFragment extends Fragment implements
     private Cursor mCursor;
     private long mItemId;
 
-    private ImageView mPhotoView;
+    private DynamicHeightNetworkImageView mPhotoView;
     private FloatingActionButton mFab;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private TextView mArticleTitle, mArticleByLine, mArticleBody;
@@ -109,7 +110,7 @@ public class ArticleDetailFragment extends Fragment implements
         mCollapsingToolbarLayout = (CollapsingToolbarLayout)
                 mRootView.findViewById(R.id.collapsing_toolbar_layout);
 
-        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
+        mPhotoView = (DynamicHeightNetworkImageView) mRootView.findViewById(R.id.photo);
 
         mToolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
         mArticleTitle = (TextView) mRootView.findViewById(R.id.article_title);
@@ -153,11 +154,9 @@ public class ArticleDetailFragment extends Fragment implements
                 mToolbar.setTitle(articleTitle);
             }
 
-            Picasso.with(getActivity().getApplicationContext())
-                    .load(photo)
-                    .centerCrop()
-                    .fit()
-                    .into(mPhotoView);
+            mPhotoView.setImageUrl(photo,
+                    ImageLoaderHelper.getInstance(getActivity()).getImageLoader());
+            mPhotoView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
             mArticleTitle.setText(articleTitle);
             mArticleByLine.setText(articleByLine);
             mArticleBody.setText(articleBody);
